@@ -1,4 +1,4 @@
-import {Element} from 'ldamle';
+import {Element} from 'ldamle.lle';
 
 test('should correctly import module ldamle', () => {
     const element = new Element();

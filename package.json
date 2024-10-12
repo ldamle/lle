@@ -1,5 +1,5 @@
 {
-  "name": "ldamle",
+  "name": "ldamle.lle",
   "version": "1.0.19",
   "description": "Library for drawning and modeling logical elements",
   "main": "dist/lle.js",
