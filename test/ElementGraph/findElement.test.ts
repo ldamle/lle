@@ -24,17 +24,17 @@ describe('Check findElement functions', () => {
     const eg = new lle.ElementGraph(e2);
 
     test('check findElement with generators', () => {
-        expect((eg.findElement(g1) as Types.ElementGraphNode).element).toEqual(g1);
-        expect((eg.findElement(g2) as Types.ElementGraphNode).element).toEqual(g2);
-        expect((eg.findElement(g3) as Types.ElementGraphNode).element).toEqual(g3);
-        expect((eg.findElement(g4) as Types.ElementGraphNode).element).toEqual(g4);
+        expect((eg.findElement(g1) as Types.elementGraph.node).element).toEqual(g1);
+        expect((eg.findElement(g2) as Types.elementGraph.node).element).toEqual(g2);
+        expect((eg.findElement(g3) as Types.elementGraph.node).element).toEqual(g3);
+        expect((eg.findElement(g4) as Types.elementGraph.node).element).toEqual(g4);
     });
 
     test('check findElement with elements', () => {
-        expect((eg.findElement(e1) as Types.ElementGraphNode).element).toEqual(e1);
-        expect((eg.findElement(e2) as Types.ElementGraphNode).element).toEqual(e2);
-        expect((eg.findElement(e3) as Types.ElementGraphNode).element).toEqual(e3);
-        expect((eg.findElement(e4) as Types.ElementGraphNode).element).toEqual(e4);
+        expect((eg.findElement(e1) as Types.elementGraph.node).element).toEqual(e1);
+        expect((eg.findElement(e2) as Types.elementGraph.node).element).toEqual(e2);
+        expect((eg.findElement(e3) as Types.elementGraph.node).element).toEqual(e3);
+        expect((eg.findElement(e4) as Types.elementGraph.node).element).toEqual(e4);
         expect(eg.findElement(e5)).toEqual(false);
     });
 });

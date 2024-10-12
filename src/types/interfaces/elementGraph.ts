@@ -16,7 +16,7 @@ interface ElementGraph {
      * Генерирует граф элементов начиная с указанного элемента.
      * @param pointElement - Начальный элемент для генерации графа.
      */
-    genGraph(pointElement: Element): void;
+    genGraph(pointElement: Types.Interface.Element): void;
 
     /**
      * Находит элемент в графе.
@@ -24,7 +24,7 @@ interface ElementGraph {
      * @param pointElement - Элемент, который нужно найти в графе.
      * @returns Узел графа или `false`, если элемент не найден.
      */
-    findElement(pointElement: Element): Types.elementGraph.node | false;
+    findElement(pointElement: Types.Interface.Element): Types.elementGraph.node | false;
 
     /**
      * Находит все соединения, к которым подключен данный узел
@@ -50,21 +50,21 @@ interface ElementGraph {
      * Генераторы — это элементы, создающие сигнал (например, генераторы меандра).
      * @returns Массив элементов-генераторов.
      */
-    getGenerators(): Element[];
+    getGenerators(): Types.Interface.Element[];
 
     /**
      * Возвращает все элементы графа, используя алгоритм обхода в глубину (DFS).
      * Элементы возвращаются в порядке обхода.
      * @returns Массив элементов, отсортированный по результатам обхода в глубину.
      */
-    getAllElementsDFS(): Element[];
+    getAllElementsDFS(): Types.Interface.Element[];
 
     /**
      * Возвращает все элементы графа, используя алгоритм обхода в ширину (BFS).
      * Элементы возвращаются в порядке обхода.
      * @returns Массив элементов, отсортированный по результатам обхода в ширину.
      */
-    getAllElementsBFS(): Element[];
+    getAllElementsBFS(): Types.Interface.Element[];
 
     /**
      * Возвращает все узлы графа, используя алгоритм обхода в глубину (DFS).

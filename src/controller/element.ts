@@ -1,4 +1,5 @@
 import * as Types from '../types';
+import * as stde from '../stde/stde';
 import {Factories} from '../factories';
 
 /**
@@ -53,7 +54,29 @@ class Element implements Types.Interface.Element {
      * @param outName Массив имен выходов элемента
      * @param signals Сигналы на выходе элемента при входных сигналах (подробнее {@link Types.signal.detailStateArray})
      */
-    constructor(name: string, inName: string[], outName: string[], signals: Types.signal.detailStateArray);
+    constructor(
+        name: string,
+        inName: string[],
+        outName: string[],
+        signals: Types.signal.detailStateArray
+    );
+    /**
+     * Конструктор класса Element.
+     * Создает элемент без названия с входами, выходами и функцией состояний
+     * @param inName Массив имен входов элемента
+     * @param outName Массив имен выходов элемента
+     * @param signals Функция, задающая выходные сигналы на основе входных
+     */
+    constructor(inName: string[], outName: string[], signals: Types.signal.func);
+    /**
+     * Конструктор класса Element.
+     * Создает элемент с названием с входами, выходами и функцией состояний
+     * @param name Название элемента
+     * @param inName Массив имен входов элемента
+     * @param outName Массив имен выходов элемента
+     * @param signals Функция, задающая выходные сигналы на основе входных
+     */
+    constructor(name: string, inName: string[], outName: string[], signals: Types.signal.func);
     /**
      * Конструктор класса Element.
      * Создает элемент без названия через клонирование
@@ -81,12 +104,12 @@ class Element implements Types.Interface.Element {
     constructor(
         arg1?: string | string[] | Element,
         arg2?: string[] | Element,
-        arg3?: Types.signal.detailStateArray | Element | string[],
-        signals?: Types.signal.detailStateArray
+        arg3?: Types.signal.detailStateArray | Element | string[] | Types.signal.func,
+        signals?: Types.signal.detailStateArray | Types.signal.func
     ) {
         this.in_connections = [];
         this.out_connections = [];
-        this.state = ()=>("");
+        this.state = () => '';
         this.name = '';
         if (typeof arg1 === 'string') {
             this.name = arg1;
@@ -94,6 +117,18 @@ class Element implements Types.Interface.Element {
                 this.concat(arg2, arg3);
             }
             if (arg2 instanceof Array && arg3 instanceof Array && signals instanceof Array) {
+                this.setParams(
+                    arg2,
+                    arg3 as string[],
+                    stde.signal.getFunc(
+                        signals,
+                        this.in_connections.length,
+                        this.out_connections.length,
+                        this.inArray()
+                    )
+                );
+            }
+            if (arg2 instanceof Array && arg3 instanceof Array && typeof signals === 'function') {
                 this.setParams(arg2, arg3 as string[], signals);
             }
         } else {
@@ -101,7 +136,19 @@ class Element implements Types.Interface.Element {
                 this.concat(arg1, arg2);
             }
             if (arg1 instanceof Array && arg2 instanceof Array && arg3 instanceof Array) {
-                this.setParams(arg1, arg2, arg3);
+                this.setParams(
+                    arg1,
+                    arg2,
+                    stde.signal.getFunc(
+                        arg3,
+                        this.in_connections.length,
+                        this.out_connections.length,
+                        this.inArray()
+                    )
+                );
+            }
+            if (arg2 instanceof Array && arg3 instanceof Array && typeof signals === 'function') {
+                this.setParams(arg2, arg3 as string[], signals);
             }
         }
     }
@@ -116,11 +163,16 @@ class Element implements Types.Interface.Element {
     setParams(inName: string[], outName: string[], signals: Types.signal.func): Element {
         for (let i = 0; i < outName.length; i++) {
             this.out_connections.push(
-                Factories.Connection.create({name: outName[i], element: this})
+                Factories.Connection.create({
+                    name: outName[i],
+                    element: this,
+                    no_source: i,
+                    is_out: true
+                })
             );
         }
         this.in_connections = inName;
-        this.state = this.genState(signals);
+        this.state = signals;
         return this;
     }
 
@@ -136,6 +188,7 @@ class Element implements Types.Interface.Element {
      * @param elementOut Элемент, выходы которого соединяются.
      * @param elementIn Элемент, входы которого принимают соединение.
      * @returns Экземпляр текущего элемента после соединения.
+     * TODO сделать no_source
      */
     concat(elementOut: Element, elementIn: Element): Types.Interface.Element {
         const elementOutn = elementOut.clone();
@@ -166,7 +219,6 @@ class Element implements Types.Interface.Element {
                     elementInn.in_connections[i] as string,
                     elementOutn.out_connections[i]
                 );
-                // this.out_connections.push(elementIn.out_connections[i]);
             }
             for (let i = 0; i < elementInn.out_connections.length; i++) {
                 this.out_connections.push(elementInn.out_connections[i]);
@@ -233,13 +285,20 @@ class Element implements Types.Interface.Element {
      */
     in(name: string, connection?: Types.Interface.Connection): Types.Interface.Connection | string {
         if (connection) {
-            connection.inConnect({name: name, element: this});
+            let iOut = -1;
             for (let i = 0; i < this.in_connections.length; i++) {
                 if (this.in_connections[i] === name) {
                     this.in_connections[i] = connection;
+                    iOut = i;
                     break;
                 }
             }
+            connection.inConnect({
+                name: name,
+                element: this,
+                no_source: iOut,
+                is_out: false
+            });
             return connection;
         }
         for (let i = 0; i < this.in_connections.length; i++) {
@@ -277,6 +336,23 @@ class Element implements Types.Interface.Element {
     }
 
     /**
+     * Выдает массив входов в виде строки
+     * @param name Имя входа.
+     * @returns Индекс входа или -1, если не найдено.
+     */
+    inArray(): string[] {
+        const arr: string[] = [];
+        for (let i = 0; i < this.in_connections.length; i++) {
+            if (typeof this.in_connections[i] === 'string') {
+                arr.push(this.in_connections[i] as string);
+            } else {
+                arr.push((this.in_connections[i] as Types.Interface.Connection).findInString(this));
+            }
+        }
+        return arr;
+    }
+
+    /**
      * Возвращает выходное соединение по имени.
      * @param name Имя выхода.
      * @returns Объект соединения.
@@ -288,130 +364,6 @@ class Element implements Types.Interface.Element {
             }
         }
         return {} as Types.Interface.Connection;
-    }
-
-    /**
-     * Генерирует состояние на выходах элемента. Про состояния подробнее см. {@link Types.signal.detailStateArray}
-     * @param array Массив сигналов.
-     * @returns Обновленный массив состояний.
-     */
-    genState(array: Types.signal.detailStateArray): Types.signal.func {
-        this.state = new Array(2 ** this.in_connections.length).fill(
-            new Array(this.out_connections.length).fill('z')
-        );
-        for (let i = 0; i < array.length; i++) {
-            if (
-                typeof array[i] === 'object' &&
-                'in' in (array[i] as object) &&
-                'out' in (array[i] as object)
-            ) {
-                this.genStateDetailSignal(array[i] as Types.signal.detail);
-            } else if (
-                typeof array[i] === 'object' &&
-                'name' in (array[i] as object) &&
-                'state' in (array[i] as object) &&
-                'out' in (array[i] as object)
-            ) {
-                this.genStateSignal(array[i] as Types.signal.state);
-            } else {
-                this.genSignal(array[i] as Types.signal.array);
-            }
-        }
-        return this.state;
-    }
-
-    /**
-     * Дополнительная функция для genState
-     * @param state
-     */
-    private genSignal(state: Types.signal.array): void {
-        const eqArray: Types.signal.array = 'z'.repeat(this.out_connections.length);
-        for (let i = 0; i < this.state.length; i++) {
-            if (JSON.stringify(this.state[i]) === JSON.stringify(eqArray)) {
-                this.state[i] = state as Types.signal.array;
-                break;
-            }
-        }
-    }
-
-    /**
-     * Дополнительная функция для genState
-     * @param state
-     */
-    private genStateDetailSignal(state: Types.signal.detail): void {
-        if (Array.isArray(state.in)) {
-            state.in = state.in.join('');
-        }
-        const ie = this.getSignalGenerateVariations(state.in);
-        for (let i = 0; i < ie.length; i++) {
-            this.state[parseInt(ie[i], 2)] = state.out as Types.signal.array;
-        }
-    }
-
-    /**
-     * Дополнительная функция для genState
-     * @param s
-     * @returns
-     */
-    private getSignalGenerateVariations(s: string): string[] {
-        if (!s.includes('x')) {
-            return [s]; // Если нет 'x', возвращаем строку как есть
-        }
-        const variations: string[] = [];
-        const firstXIndex = s.indexOf('x');
-        variations.push(
-            ...this.getSignalGenerateVariations(
-                s.slice(0, firstXIndex) + '0' + s.slice(firstXIndex + 1)
-            )
-        );
-        variations.push(
-            ...this.getSignalGenerateVariations(
-                s.slice(0, firstXIndex) + '1' + s.slice(firstXIndex + 1)
-            )
-        );
-        return variations;
-    }
-
-    /**
-     * Дополнительная функция для genState
-     * @param state
-     * @param arri
-     */
-    private genStateSignal(state: Types.signal.state, arri?: [number, Types.signal.it][]): void {
-        if (state.name === 'else') {
-            const eqArray: Types.signal.array = 'z'.repeat(this.out_connections.length);
-            for (let i = 0; i < this.state.length; i++) {
-                if (JSON.stringify(this.state[i]) === JSON.stringify(eqArray)) {
-                    this.state[i] = state.out as Types.signal.array;
-                }
-            }
-            return;
-        }
-        if (
-            typeof state.out === 'object' &&
-            'name' in (state.out as object) &&
-            'state' in (state.out as object) &&
-            'out' in (state.out as object)
-        ) {
-            if (arri) {
-                arri.push([this.inIndex(state.name), state.state]);
-                this.genStateSignal(state.out, arri);
-            } else {
-                this.genStateSignal(state.out as Types.signal.state, [
-                    [this.inIndex(state.name), state.state]
-                ]);
-            }
-            return;
-        }
-        let ie: Types.signal.array = 'x'.repeat(this.in_connections.length);
-
-        if (arri) {
-            for (let i = 0; i < arri.length; i++) {
-                ie = Types.signal.__replByIndex(ie, arri[i][1], arri[i][0]);
-            }
-        }
-        ie = Types.signal.__replByIndex(ie, state.state, this.inIndex(state.name));
-        this.genStateDetailSignal({in: ie, out: state.out as Types.signal.array});
     }
 
     /**
@@ -450,29 +402,6 @@ class Element implements Types.Interface.Element {
             }
         }
         return true;
-    }
-
-    /**
-     * Проверяет, все ли сигналы элемента отличны от 'z'.
-     * @returns true, если все сигналы известны, иначе false.
-     */
-    isAllSignalNotZ(): boolean {
-        for (let i = 0; i < this.state.length; i++) {
-            for (let j = 0; j < this.state[i].length; j++) {
-                if (this.state[i][j] === 'z') {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Проверяет, готов ли элемент для моделирования.
-     * @returns true, если элемент готов, иначе false.
-     */
-    isReady(): boolean {
-        return this.isAllInConnected() && this.isAllSignalNotZ();
     }
 }
 
@@ -519,10 +448,24 @@ class Generator implements Types.Interface.Element {
     constructor(arg1: number | string, frequency?: number) {
         if (typeof arg1 === 'string' && frequency) {
             this.frequency = frequency;
-            this.out_connections = [Factories.Connection.create({name: arg1, element: this})];
+            this.out_connections = [
+                Factories.Connection.create({
+                    name: arg1,
+                    element: this,
+                    no_source: 0,
+                    is_out: true
+                })
+            ];
         } else {
             this.frequency = arg1 as number;
-            this.out_connections = [Factories.Connection.create({name: '', element: this})];
+            this.out_connections = [
+                Factories.Connection.create({
+                    name: '',
+                    element: this,
+                    no_source: 0,
+                    is_out: true
+                })
+            ];
         }
     }
 
@@ -567,16 +510,6 @@ class Generator implements Types.Interface.Element {
         } else {
             return true;
         }
-    }
-
-    /**
-     * Проверяет, готов ли генератор к работе.
-     * Генератор считается готовым, если его выходное соединение подключено и у него есть имя.
-     *
-     * @returns `true`, если генератор готов к работе, иначе `false`.
-     */
-    isReady(): boolean {
-        return this.isAllInConnected() && this.out_connections[0].out.name !== '';
     }
 }
 

@@ -21,16 +21,16 @@ describe('Check getInputs/getOutputs functions', () => {
 
     test('check getInputs', () => {
         expect(eg.getInputs()).toEqual([
-            {name: 'C', element: e2},
-            {name: 'A', element: e4}
+            {name: 'C', element: e2, no_source: 2, is_out: false},
+            {name: 'A', element: e4, no_source: 3, is_out: false}
         ]);
     });
     test('check getOutputs', () => {
         expect(eg.getOutputs()).toEqual([
-            {in: false, out: {name: 'A', element: e1}, state:'z'},
-            {in: false, out: {name: 'A', element: e4}, state:'z'},
-            {in: false, out: {name: 'B', element: e4}, state:'z'},
-            {in: false, out: {name: 'C', element: e4}, state:'z'}
+            {in: false, out: {name: 'A', element: e1, no_source: 0, is_out: true}, state:'z'},
+            {in: false, out: {name: 'A', element: e4, no_source: 0, is_out: true}, state:'z'},
+            {in: false, out: {name: 'B', element: e4, no_source: 1, is_out: true}, state:'z'},
+            {in: false, out: {name: 'C', element: e4, no_source: 2, is_out: true}, state:'z'}
         ]);
     });
 });

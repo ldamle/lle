@@ -20,14 +20,6 @@ describe('Check bool functions', () => {
         expect(element1.isAllInConnected()).toEqual(false);
     });
 
-    // test('isAllSignalNotZ => true', () => {
-    //     expect(element1.isAllSignalNotZ()).toEqual(true);
-    // });
-
-    test('isReady => false', () => {
-        expect(element1.isReady()).toEqual(false);
-    });
-
     test('isAllInConnected => true', () => {
         for (let i = 0; i < element1.in_connections.length; i++) {
             element1.in(
@@ -36,18 +28,5 @@ describe('Check bool functions', () => {
             );
         }
         expect(element1.isAllInConnected()).toEqual(true);
-    });
-
-    test('isAllSignalNotZ => true', () => {
-        expect(element1.isAllSignalNotZ()).toEqual(true);
-    });
-
-    test('isReady => true', () => {
-        expect(element1.isReady()).toEqual(true);
-    });
-
-    test('isAllSignalNotZ => false', () => {
-        element1.genState([]);
-        expect(element1.isAllSignalNotZ()).toEqual(false);
     });
 });

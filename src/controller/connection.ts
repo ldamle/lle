@@ -1,4 +1,3 @@
-import * as Interface from '../types/interface';
 import * as Types from '../types';
 
 /**
@@ -6,26 +5,26 @@ import * as Types from '../types';
  * Соединение всегда имеет обязательный выход, а входы могут быть
  * как отсутствовать, так и быть в единственном или множественном числе.
  */
-class Connection implements Interface.Connection {
+class Connection implements Types.Interface.Connection {
     //--------------------------------- Connection:in --------------------------------//
     /**
      * * Массив подключенных входов или false, если входы отсутствуют
      */
-    in: Types.SourcesArray | false;
+    in: Types.source.array | false;
     //--------------------------------- Connection:in --------------------------------//
 
     //--------------------------------- Connection:out --------------------------------//
     /**
      * * Выход соединения (только для чтения)
      */
-    readonly out: Types.Sources;
+    readonly out: Types.source.it;
     //--------------------------------- Connection:out --------------------------------//
 
     //--------------------------------- Connection:state --------------------------------//
     /**
      * * Текущий сигнал соединения
      */
-    state: Types.Signal;
+    state: Types.signal.it;
     //--------------------------------- Connection:state --------------------------------//
 
     /**
@@ -33,21 +32,21 @@ class Connection implements Interface.Connection {
      * оставляя вход свободным.
      * @param outSource выход соединения
      */
-    constructor(outSource: Types.Sources);
+    constructor(outSource: Types.source.it);
 
     /**
      * Создает новое соединение с одним выходом и одним входом.
      * @param outSource выход соединения
      * @param inSource вход соединения
      */
-    constructor(outSource: Types.Sources, inSource: Types.Sources);
+    constructor(outSource: Types.source.it, inSource: Types.source.it);
 
     /**
      * Создает новое соединение с одним выходом и несколькими входами.
      * @param outSource выход соединения
      * @param inSourceArray массив входов соединения
      */
-    constructor(outSource: Types.Sources, inSourceArray: Types.SourcesArray);
+    constructor(outSource: Types.source.it, inSourceArray: Types.source.array);
 
     /**
      * Создает новое соединение и его состояние с одним выходом и одним входом.
@@ -55,7 +54,7 @@ class Connection implements Interface.Connection {
      * @param inSource вход соединения
      * @param state Текущее состояние элемента
      */
-    constructor(outSource: Types.Sources, inSource: Types.Sources, state: Types.Signal);
+    constructor(outSource: Types.source.it, inSource: Types.source.it, state: Types.signal.it);
 
     /**
      * Создает новое соединение и его состояние с одним выходом и несколькими входами.
@@ -63,7 +62,11 @@ class Connection implements Interface.Connection {
      * @param inSourceArray массив входов соединения
      * @param state Текущее состояние элемента
      */
-    constructor(outSource: Types.Sources, inSourceArray: Types.SourcesArray, state: Types.Signal);
+    constructor(
+        outSource: Types.source.it,
+        inSourceArray: Types.source.array,
+        state: Types.signal.it
+    );
 
     /**
      * Основной конструктор, который позволяет создать соединение с
@@ -79,9 +82,9 @@ class Connection implements Interface.Connection {
      * @param state Текущее состояние элемента
      */
     constructor(
-        outSource: Types.Sources,
-        arg2?: Types.Sources | Types.SourcesArray,
-        state?: Types.Signal
+        outSource: Types.source.it,
+        arg2?: Types.source.it | Types.source.array,
+        state?: Types.signal.it
     ) {
         this.in = false;
         this.out = outSource;
@@ -104,7 +107,7 @@ class Connection implements Interface.Connection {
      * @param inSource вход элемента
      * @returns текущее соединение
      */
-    inConnect(inSource: Types.Sources): Interface.Connection {
+    inConnect(inSource: Types.source.it): Connection {
         if (Array.isArray(this.in)) {
             this.in.push(inSource);
         } else {
@@ -118,7 +121,7 @@ class Connection implements Interface.Connection {
      * @param inSource вход, который нужно отсоединить
      * @returns текущее соединение
      */
-    disConnect(inSource: Types.Sources): Interface.Connection {
+    disConnect(inSource: Types.source.it): Connection {
         if (Array.isArray(this.in)) {
             for (let i = 0; i < this.in.length; i++) {
                 if (this.in[i].name === inSource.name && this.in[i].element === inSource.element) {
@@ -138,7 +141,7 @@ class Connection implements Interface.Connection {
      * @param inSourceArray массив входов
      * @returns текущее соединение
      */
-    inConnects(inSourceArray: Types.SourcesArray): Interface.Connection {
+    inConnects(inSourceArray: Types.source.array): Connection {
         if (Array.isArray(this.in)) {
             this.in.push(...inSourceArray);
         } else {
@@ -152,7 +155,7 @@ class Connection implements Interface.Connection {
      * @param inSourceArray массив входов, которые нужно отсоединить
      * @returns текущее соединение
      */
-    disConnects(inSourceArray: Types.SourcesArray): Interface.Connection {
+    disConnects(inSourceArray: Types.source.array): Connection {
         if (Array.isArray(this.in)) {
             for (let i = 0; i < inSourceArray.length; i++) {
                 this.disConnect(inSourceArray[i]);
@@ -183,8 +186,13 @@ class Connection implements Interface.Connection {
      * @param element элемент, к которому подключен выход нового соединения
      * @returns новое соединение с клонированными входами
      */
-    clone(element: Interface.Element): Interface.Connection {
-        return new Connection({name: this.out.name, element: element});
+    clone(element: Types.Interface.Element): Connection {
+        return new Connection({
+            name: this.out.name,
+            element: element,
+            no_source: this.out.no_source,
+            is_out: true
+        });
     }
 
     /**
@@ -206,7 +214,7 @@ class Connection implements Interface.Connection {
      * @param element элемент, для которого нужно найти подключенный вход
      * @returns название входа
      */
-    findInString(element: Interface.Element): string {
+    findInString(element: Types.Interface.Element): string {
         if (Array.isArray(this.in)) {
             for (let i = 0; i < this.in.length; i++) {
                 if (this.in[i].element === element) {
@@ -215,6 +223,22 @@ class Connection implements Interface.Connection {
             }
         }
         return '';
+    }
+
+    /**
+     * Находит вход, который принадлежит указанному элементу.
+     * @param element элемент, для которого нужно найти подключенный вход
+     * @returns вход
+     */
+    findInSource(element: Types.Interface.Element): Types.source.it {
+        if (Array.isArray(this.in)) {
+            for (let i = 0; i < this.in.length; i++) {
+                if (this.in[i].element === element) {
+                    return this.in[i];
+                }
+            }
+        }
+        return undefined as any;
     }
 }
 

@@ -25,25 +25,25 @@ describe('Check getDataElementGraph', () => {
         expect(eg.getDataElementGraph()).toEqual({
             elements: [
                 {
-                    name: undefined,
+                    name: '',
                     id: 0,
                     connections_in: [],
                     connections_out: [{conn_name: 'g1', id: [4]}]
                 },
                 {
-                    name: undefined,
+                    name: '',
                     id: 1,
                     connections_in: [],
                     connections_out: [{conn_name: 'g2', id: [4]}]
                 },
                 {
-                    name: undefined,
+                    name: '',
                     id: 2,
                     connections_in: [],
                     connections_out: [{conn_name: 'g4', id: [6]}]
                 },
                 {
-                    name: undefined,
+                    name: '',
                     id: 3,
                     connections_in: [],
                     connections_out: [{conn_name: 'g3', id: [5]}]

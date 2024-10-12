@@ -58,6 +58,13 @@ interface Connection {
      */
     findInString(element: Types.Interface.Element): string;
 
+    /**
+     * Находит вход, который принадлежит указанному элементу.
+     * @param element элемент, для которого нужно найти подключенный вход
+     * @returns вход
+     */
+    findInSource(element: Types.Interface.Element): Types.source.it;
+
     // Проверяет, подключено ли соединение хотя бы к одному входу
     isConnected(): boolean;
 }

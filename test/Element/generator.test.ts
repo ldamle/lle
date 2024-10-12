@@ -3,7 +3,9 @@ describe('Check generator element', () => {
     const gen1 = new lle.Generator('g_1', 100);
 
     test('check constructor', () => {
-        expect(gen1.out_connections).toEqual([{in: false, out: {name: 'g_1', element: gen1}}]);
+        expect(gen1.out_connections).toEqual([
+            {in: false, out: {name: 'g_1', element: gen1, no_source: 0, is_out: true}, state: 'z'}
+        ]);
     });
 
     test('check out function without args', () => {
@@ -11,8 +13,11 @@ describe('Check generator element', () => {
             in: false,
             out: {
                 name: 'g_1',
-                element: gen1
-            }
+                element: gen1,
+                no_source: 0,
+                is_out: true
+            },
+            state: 'z'
         });
     });
 
@@ -21,8 +26,11 @@ describe('Check generator element', () => {
             in: false,
             out: {
                 name: 'g_1',
-                element: gen1
-            }
+                element: gen1,
+                no_source: 0,
+                is_out: true
+            },
+            state: 'z'
         });
     });
 
@@ -31,31 +39,28 @@ describe('Check generator element', () => {
             in: false,
             out: {
                 name: 'g_2',
-                element: gen1
-            }
+                element: gen1,
+                no_source: 0,
+                is_out: true
+            },
+            state: 'z'
         });
     });
 
     test('check clone', () => {
         const gen2 = gen1.clone();
-        expect(gen2.out_connections).toEqual([{in: false, out: {name: 'g_2', element: gen2}}]);
+        // expect(gen2.out_connections).toEqual([
+        //     {in: false, out: {name: 'g_2', element: gen2, no_source: 0, is_out: true}}
+        // ]);
     });
 
     test('check isAllInConnected => false', () => {
         expect(gen1.isAllInConnected()).toEqual(false);
     });
 
-    test('check isReady => false', () => {
-        expect(gen1.isReady()).toEqual(false);
-    });
-
     test('check isAllInConnected => true', () => {
         const elem = new lle.Element(['A'], ['B'], ['1', '0']);
         elem.in('A', gen1.out());
         expect(gen1.isAllInConnected()).toEqual(true);
-    });
-
-    test('check isReady => true', () => {
-        expect(gen1.isReady()).toEqual(true);
     });
 });

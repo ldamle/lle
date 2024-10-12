@@ -96,11 +96,12 @@ interface Element {
     // Проверяет, подключены ли все входы
     isAllInConnected(): boolean;
 
-    // Проверяет, находится ли хотя бы один сигнал в неопределенном состоянии
-    isAllSignalNotZ?(): boolean;
-
-    // Проверяет готовность элемента к симуляции
-    isReady(): boolean;
+     /**
+     * Выдает массив входов в виде строки
+     * @param name Имя входа.
+     * @returns Индекс входа или -1, если не найдено.
+     */
+     inArray?(): string[];
 }
 
 export {Element};
