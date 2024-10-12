@@ -1,4 +1,3 @@
-import * as Interface from '../interface';
 import * as Types from '../types';
 import {Factories} from '../factories';
 
@@ -6,7 +5,7 @@ import {Factories} from '../factories';
  * Класс Element представляет элемент схемы с входными и выходными соединениями.
  * Он используется для моделирования сигналов и управления связями между элементами.
  */
-class Element implements Interface.Element {
+class Element implements Types.Interface.Element {
     /**
      * Имя элемента
      */
@@ -15,17 +14,17 @@ class Element implements Interface.Element {
     /**
      * Входные соединения (могут быть строками или объектами Connection)
      */
-    in_connections: (Interface.Connection | string)[];
+    in_connections: (Types.Interface.Connection | string)[];
 
     /**
      * Выходные соединения
      */
-    out_connections: Interface.Connection[];
+    out_connections: Types.Interface.Connection[];
 
     /**
      * Текущее состояние сигнала на выходах
      */
-    state: Types.SignalArray[];
+    state: Types.signal.func;
 
     /**
      * Конструктор класса Element.
@@ -43,18 +42,18 @@ class Element implements Interface.Element {
      * Создает элемент без названия с входами, выходами и состояниями
      * @param inName Массив имен входов элемента
      * @param outName Массив имен выходов элемента
-     * @param signals Сигналы на выходе элемента при входных сигналах (подробнее {@link Types.DSSSArray})
+     * @param signals Сигналы на выходе элемента при входных сигналах (подробнее {@link Types.signal.detailStateArray})
      */
-    constructor(inName: string[], outName: string[], signals: Types.DSSSArray);
+    constructor(inName: string[], outName: string[], signals: Types.signal.detailStateArray);
     /**
      * Конструктор класса Element.
      * Создает элемент с названием с входами, выходами и состояниями
      * @param name Название элемента
      * @param inName Массив имен входов элемента
      * @param outName Массив имен выходов элемента
-     * @param signals Сигналы на выходе элемента при входных сигналах (подробнее {@link Types.DSSSArray})
+     * @param signals Сигналы на выходе элемента при входных сигналах (подробнее {@link Types.signal.detailStateArray})
      */
-    constructor(name: string, inName: string[], outName: string[], signals: Types.DSSSArray);
+    constructor(name: string, inName: string[], outName: string[], signals: Types.signal.detailStateArray);
     /**
      * Конструктор класса Element.
      * Создает элемент без названия через клонирование
@@ -82,12 +81,12 @@ class Element implements Interface.Element {
     constructor(
         arg1?: string | string[] | Element,
         arg2?: string[] | Element,
-        arg3?: Types.DSSSArray | Element | string[],
-        signals?: Types.DSSSArray
+        arg3?: Types.signal.detailStateArray | Element | string[],
+        signals?: Types.signal.detailStateArray
     ) {
         this.in_connections = [];
         this.out_connections = [];
-        this.state = [];
+        this.state = ()=>("");
         this.name = '';
         if (typeof arg1 === 'string') {
             this.name = arg1;
@@ -114,7 +113,7 @@ class Element implements Interface.Element {
      * @param signals Массив сигналов для состояния.
      * @returns Экземпляр текущего элемента.
      */
-    setParams(inName: string[], outName: string[], signals: Types.DSSSArray): Element {
+    setParams(inName: string[], outName: string[], signals: Types.signal.func): Element {
         for (let i = 0; i < outName.length; i++) {
             this.out_connections.push(
                 Factories.Connection.create({name: outName[i], element: this})
@@ -138,7 +137,7 @@ class Element implements Interface.Element {
      * @param elementIn Элемент, входы которого принимают соединение.
      * @returns Экземпляр текущего элемента после соединения.
      */
-    concat(elementOut: Element, elementIn: Element): Interface.Element {
+    concat(elementOut: Element, elementIn: Element): Types.Interface.Element {
         const elementOutn = elementOut.clone();
         const elementInn = elementIn.clone();
         if (elementOutn.out_connections.length < elementInn.in_connections.length) {
@@ -183,11 +182,6 @@ class Element implements Interface.Element {
                 this.in_connections.push(elementOutn.in_connections[i]);
             }
         }
-        // for (let i = 0; i < this.in_connections.length; i++) {
-        //     if (typeof this.in_connections[i] !== 'string') {
-        //         this.in_connections[i] = (this.in_connections[i] as Interface.Connection).clone(this);
-        //     }
-        // }
         for (let i = 0; i < this.out_connections.length; i++) {
             this.out_connections[i] = this.out_connections[i].clone(this);
         }
@@ -224,12 +218,12 @@ class Element implements Interface.Element {
      * @param name Название входа
      * @param connection Соединение с которым вход соединяется
      */
-    in(name: string, connection: Interface.Connection): Interface.Connection | string;
+    in(name: string, connection: Types.Interface.Connection): Types.Interface.Connection | string;
     /**
      * Выдает текущее соединение входа (если оно есть) или просто название входа
      * @param name Название входа
      */
-    in(name: string): Interface.Connection | string;
+    in(name: string): Types.Interface.Connection | string;
     /**
      * Добавляет в соединение/просто возвращяет уже добавленное
      * входное соединение элемента. (см. перегрузки)
@@ -237,7 +231,7 @@ class Element implements Interface.Element {
      * @param connection Объект соединения (необязательный параметр).
      * @returns Объект соединения или строку имени.
      */
-    in(name: string, connection?: Interface.Connection): Interface.Connection | string {
+    in(name: string, connection?: Types.Interface.Connection): Types.Interface.Connection | string {
         if (connection) {
             connection.inConnect({name: name, element: this});
             for (let i = 0; i < this.in_connections.length; i++) {
@@ -254,7 +248,7 @@ class Element implements Interface.Element {
                     return this.in_connections[i];
                 }
             } else if (
-                (this.in_connections[i] as Interface.Connection).findInString(this) === name
+                (this.in_connections[i] as Types.Interface.Connection).findInString(this) === name
             ) {
                 return this.in_connections[i];
             }
@@ -274,7 +268,7 @@ class Element implements Interface.Element {
                     return i;
                 }
             } else if (
-                (this.in_connections[i] as Interface.Connection).findInString(this) === name
+                (this.in_connections[i] as Types.Interface.Connection).findInString(this) === name
             ) {
                 return i;
             }
@@ -287,21 +281,21 @@ class Element implements Interface.Element {
      * @param name Имя выхода.
      * @returns Объект соединения.
      */
-    out(name: string): Interface.Connection {
+    out(name: string): Types.Interface.Connection {
         for (let i = 0; i < this.out_connections.length; i++) {
             if (this.out_connections[i].out.name === name) {
                 return this.out_connections[i];
             }
         }
-        return {} as Interface.Connection;
+        return {} as Types.Interface.Connection;
     }
 
     /**
-     * Генерирует состояние на выходах элемента. Про состояния подробнее см. {@link Types.DSSSArray}
+     * Генерирует состояние на выходах элемента. Про состояния подробнее см. {@link Types.signal.detailStateArray}
      * @param array Массив сигналов.
      * @returns Обновленный массив состояний.
      */
-    genState(array: Types.DSSSArray): Types.SignalArray[] {
+    genState(array: Types.signal.detailStateArray): Types.signal.func {
         this.state = new Array(2 ** this.in_connections.length).fill(
             new Array(this.out_connections.length).fill('z')
         );
@@ -311,16 +305,16 @@ class Element implements Interface.Element {
                 'in' in (array[i] as object) &&
                 'out' in (array[i] as object)
             ) {
-                this.genStateDetailSignal(array[i] as Types.DetailSignal);
+                this.genStateDetailSignal(array[i] as Types.signal.detail);
             } else if (
                 typeof array[i] === 'object' &&
                 'name' in (array[i] as object) &&
                 'state' in (array[i] as object) &&
                 'out' in (array[i] as object)
             ) {
-                this.genStateSignal(array[i] as Types.StateSignal);
+                this.genStateSignal(array[i] as Types.signal.state);
             } else {
-                this.genSignal(array[i] as Types.SignalArray);
+                this.genSignal(array[i] as Types.signal.array);
             }
         }
         return this.state;
@@ -330,11 +324,11 @@ class Element implements Interface.Element {
      * Дополнительная функция для genState
      * @param state
      */
-    private genSignal(state: Types.SignalArray): void {
-        const eqArray: Types.SignalArray = new Array(this.out_connections.length).fill('z');
+    private genSignal(state: Types.signal.array): void {
+        const eqArray: Types.signal.array = 'z'.repeat(this.out_connections.length);
         for (let i = 0; i < this.state.length; i++) {
             if (JSON.stringify(this.state[i]) === JSON.stringify(eqArray)) {
-                this.state[i] = state as Types.SignalArray;
+                this.state[i] = state as Types.signal.array;
                 break;
             }
         }
@@ -344,16 +338,13 @@ class Element implements Interface.Element {
      * Дополнительная функция для genState
      * @param state
      */
-    private genStateDetailSignal(state: Types.DetailSignal): void {
+    private genStateDetailSignal(state: Types.signal.detail): void {
         if (Array.isArray(state.in)) {
             state.in = state.in.join('');
         }
         const ie = this.getSignalGenerateVariations(state.in);
-        if (typeof state.out === 'string') {
-            state.out = this.genStateGenOutFromStr(state.out);
-        }
         for (let i = 0; i < ie.length; i++) {
-            this.state[parseInt(ie[i], 2)] = state.out as Types.SignalArray;
+            this.state[parseInt(ie[i], 2)] = state.out as Types.signal.array;
         }
     }
 
@@ -386,12 +377,12 @@ class Element implements Interface.Element {
      * @param state
      * @param arri
      */
-    private genStateSignal(state: Types.StateSignal, arri?: [number, Types.Signal][]): void {
+    private genStateSignal(state: Types.signal.state, arri?: [number, Types.signal.it][]): void {
         if (state.name === 'else') {
-            const eqArray: Types.SignalArray = new Array(this.out_connections.length).fill('z');
+            const eqArray: Types.signal.array = 'z'.repeat(this.out_connections.length);
             for (let i = 0; i < this.state.length; i++) {
                 if (JSON.stringify(this.state[i]) === JSON.stringify(eqArray)) {
-                    this.state[i] = state.out as Types.SignalArray;
+                    this.state[i] = state.out as Types.signal.array;
                 }
             }
             return;
@@ -404,44 +395,23 @@ class Element implements Interface.Element {
         ) {
             if (arri) {
                 arri.push([this.inIndex(state.name), state.state]);
-                this.genStateSignal(state.out as Types.StateSignal, arri);
+                this.genStateSignal(state.out, arri);
             } else {
-                this.genStateSignal(state.out as Types.StateSignal, [
+                this.genStateSignal(state.out as Types.signal.state, [
                     [this.inIndex(state.name), state.state]
                 ]);
             }
             return;
         }
-        const ie = new Array(this.in_connections.length).fill('x');
+        let ie: Types.signal.array = 'x'.repeat(this.in_connections.length);
 
         if (arri) {
             for (let i = 0; i < arri.length; i++) {
-                ie[arri[i][0]] = arri[i][1];
+                ie = Types.signal.__replByIndex(ie, arri[i][1], arri[i][0]);
             }
         }
-        ie[this.inIndex(state.name)] = state.state;
-        this.genStateDetailSignal({in: ie, out: state.out as Types.StringSignalArray});
-    }
-
-    /**
-     * Дополнительная функция для genState
-     * @param outState
-     * @returns
-     */
-    private genStateGenOutFromStr(outState: string): Types.SignalArray {
-        const result: Types.SignalArray = [];
-        for (let i = 0; i < outState.length; i++) {
-            const char = outState[i]; // Получаем символ по индексу
-            const num = parseInt(char, 10); // Пробуем преобразовать в число
-
-            // Если это число, добавляем его в массив, иначе добавляем символ
-            if (!isNaN(num)) {
-                result.push(num as Types.Signal);
-            } else {
-                result.push(char as Types.Signal);
-            }
-        }
-        return result;
+        ie = Types.signal.__replByIndex(ie, state.state, this.inIndex(state.name));
+        this.genStateDetailSignal({in: ie, out: state.out as Types.signal.array});
     }
 
     /**
@@ -461,11 +431,11 @@ class Element implements Interface.Element {
                 newElement.in_connections.push(this.in_connections[i]);
             } else {
                 newElement.in_connections.push(
-                    (this.in_connections[i] as Interface.Connection).findInString(this)
+                    (this.in_connections[i] as Types.Interface.Connection).findInString(this)
                 );
             }
         }
-        newElement.state = [...this.state];
+        newElement.state = this.state;
         return newElement;
     }
 
@@ -512,12 +482,12 @@ class Element implements Interface.Element {
  * У генератора нет входных соединений, но есть одно выходное,
  * через которое передаётся сигнал.
  */
-class Generator implements Interface.Element {
+class Generator implements Types.Interface.Element {
     /**
      * Массив выходных соединений элемента.
      * В данном случае у генератора есть только одно выходное соединение.
      */
-    out_connections: Interface.Connection[];
+    out_connections: Types.Interface.Connection[];
 
     /**
      * Частота генератора, определяющая, с какой скоростью
@@ -563,7 +533,7 @@ class Generator implements Interface.Element {
      * @param name - Имя для выходного соединения (необязательно).
      * @returns Возвращает выходное соединение.
      */
-    out(name?: string): Interface.Connection {
+    out(name?: string): Types.Interface.Connection {
         if (name) {
             if (name !== this.out_connections[0].out.name) {
                 this.out_connections[0].out.name = name;

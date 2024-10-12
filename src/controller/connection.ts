@@ -1,4 +1,4 @@
-import * as Interface from '../interface';
+import * as Interface from '../types/interface';
 import * as Types from '../types';
 
 /**
