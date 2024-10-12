@@ -1,6 +1,6 @@
 {
   "name": "ldamle",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Library for drawning and modeling logical elements",
   "main": "dist/lle.js",
   "types": "dist/lle.d.ts",
@@ -65,8 +65,7 @@
     "typedoc-material-theme": "1.1.0",
     "typedoc-plugin-markdown": "^4.2.8"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "browserslist": {
     "production": [
       ">0.2%",
