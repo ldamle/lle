@@ -12,6 +12,26 @@ type element = {
     display_line_in_connections: boolean,
     display_line_out_connections: boolean,
     rotate: '0'|'90'|'180'|'270'
+    sizes: {
+        MarginConn:{
+            v:string,
+            h:string,
+        },
+        MarginCenter:{
+            v:string,
+            h:string,
+            vb:string,
+        },
+        strokeWidth: string,
+        font:{
+            center:string,
+            conn:string,
+        },
+        color:{
+            background:string,
+            foregtound:string
+        }
+    }
 }
 
 export {element}
