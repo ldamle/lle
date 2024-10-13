@@ -14,18 +14,18 @@ const Default: Types.style.element = {
     rotate: '0',
     sizes: {
         MarginConn: {
-            v: 10,
-            h: 10
+            v: 30,
+            h: 12
         },
         MarginCenter: {
-            v: 10,
-            h: 10,
+            v: 15,
+            h: 40,
             vb: 10
         },
-        strokeWidth: 10,
+        strokeWidth: 3,
         font: {
-            center: 10,
-            conn: 10
+            center: 35,
+            conn: 28
         },
         color: {
             background: '#ffffff',
