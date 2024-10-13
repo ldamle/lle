@@ -14,22 +14,22 @@ type element = {
     rotate: '0' | '90' | '180' | '270';
     sizes: {
         MarginConn: {
-            v: string;
-            h: string;
+            v: number;
+            h: number;
         };
         MarginCenter: {
-            v: string;
-            h: string;
-            vb: string;
+            v: number;
+            h: number;
+            vb: number;
         };
-        strokeWidth: string;
+        strokeWidth: number;
         font: {
-            center: string;
-            conn: string;
+            center: number;
+            conn: number;
         };
         color: {
             background: string;
-            foregtound: string;
+            foreground: string;
         };
     };
 };

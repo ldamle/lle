@@ -15,7 +15,7 @@ ask_continue() {
 
 ask_continue
 
-
+npm run build
 git add .
 git commit -m 'testpatch'
 npm version patch

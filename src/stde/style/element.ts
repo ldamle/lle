@@ -14,22 +14,22 @@ const Default: Types.style.element = {
     rotate: '0',
     sizes: {
         MarginConn: {
-            v: '10pt',
-            h: '10pt'
+            v: 10,
+            h: 10
         },
         MarginCenter: {
-            v: '10pt',
-            h: '10pt',
-            vb: '10pt'
+            v: 10,
+            h: 10,
+            vb: 10
         },
-        strokeWidth: '10pt',
+        strokeWidth: 10,
         font: {
-            center: '10pt',
-            conn: '10pt'
+            center: 10,
+            conn: 10
         },
         color: {
-            background: '#',
-            foregtound: '10pt'
+            background: '#ffffff',
+            foreground: '#000000'
         }
     }
 };
@@ -48,22 +48,22 @@ const Generator: Types.style.element = {
     rotate: '0',
     sizes: {
         MarginConn: {
-            v: '10pt',
-            h: '10pt'
+            v: 10,
+            h: 10
         },
         MarginCenter: {
-            v: '10pt',
-            h: '10pt',
-            vb: '10pt'
+            v: 10,
+            h: 10,
+            vb: 10
         },
-        strokeWidth: '10pt',
+        strokeWidth: 10,
         font: {
-            center: '10pt',
-            conn: '10pt'
+            center: 10,
+            conn: 10
         },
         color: {
-            background: '#',
-            foregtound: '10pt'
+            background: '#ffffff',
+            foreground: '#000000'
         }
     }
 };
