@@ -1,3 +1,4 @@
 import * as signal from './signal/getFunc';
+import * as style from './style';
 
-export {signal};
+export {signal, style};
