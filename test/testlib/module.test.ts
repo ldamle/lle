@@ -1,6 +1,6 @@
-import {Element} from 'ldamle.lle/src/lle';
+import {Element} from 'ldamle.lle';
 
-test('should correctly import module ldamle', () => {
+test('should correctly import module ldamle.lle', () => {
     const element = new Element();
     expect(typeof element).toBe('object');
     expect(element.out_connections).toStrictEqual([]);

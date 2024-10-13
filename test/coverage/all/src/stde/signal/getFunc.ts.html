@@ -211,13 +211,35 @@
 <a name='L153'></a><a href='#L153'>153</a>
 <a name='L154'></a><a href='#L154'>154</a>
 <a name='L155'></a><a href='#L155'>155</a>
-<a name='L156'></a><a href='#L156'>156</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">21x</span>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -274,11 +296,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">58x</span>
 <span class="cline-any cline-yes">58x</span>
 <span class="cline-any cline-yes">86x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -315,6 +340,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -368,6 +396,11 @@
 <span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as Types from '../../types';
 &nbsp;
+/**
+ *
+ * @param array
+ * @param elem
+ */
 function getFuncElement(
     array: Types.signal.detailStateArray,
     elem: Types.Interface.Element
@@ -384,6 +417,9 @@ function getFuncElement(
  * Генерирует состояние на выходах элемента.
  * Про состояния подробнее см. {@link Types.signal.detailStateArray}
  * @param array Массив сигналов.
+ * @param inLen
+ * @param outLen
+ * @param inNameArr
  * @returns Обновленный массив состояний.
  */
 function getFunc(
@@ -392,7 +428,7 @@ function getFunc(
     outLen: number,
     inNameArr?: string[]
 ): Types.signal.func {
-    let gState: Types.signal.array[] = new Array(2 ** inLen).fill('z'.repeat(outLen));
+    const gState: Types.signal.array[] = new Array(2 ** inLen).fill('z'.repeat(outLen));
     for (let i = 0; i &lt; array.length; i++) {
         if (
             typeof array[i] === 'object' &amp;&amp;
@@ -413,7 +449,7 @@ function getFunc(
         }
     }
     return (a: Types.signal.array): Types.signal.array =&gt; {
-        let int = gState[parseInt(a, 2)];
+        const int = gState[parseInt(a, 2)];
         if (int) {
             return int;
         } else <span class="missing-if-branch" title="else path not taken" >E</span>if (gState.length &gt; 0) {
@@ -427,6 +463,8 @@ function getFunc(
 /**
  * Дополнительная функция для getFunc
  * @param state
+ * @param gState
+ * @param outLen
  */
 function genSignal(state: Types.signal.array, gState: Types.signal.array[], outLen: number): void {
     const eqArray: Types.signal.array = 'z'.repeat(outLen);
@@ -441,6 +479,7 @@ function genSignal(state: Types.signal.array, gState: Types.signal.array[], outL
 /**
  * Дополнительная функция для getFunc
  * @param state
+ * @param gState
  */
 function genStateDetailSignal(state: Types.signal.detail, gState: Types.signal.array[]): void {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (Array.isArray(state.in)) {
@@ -475,6 +514,9 @@ function getSignalGenerateVariations(s: string): string[] {
 /**
  * Дополнительная функция для getFunc
  * @param state
+ * @param gState
+ * @param inNameArr
+ * @param outLen
  * @param arri
  */
 function genStateSignal(
@@ -528,7 +570,7 @@ export {getFunc, getFuncElement};
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Oct 12 2024 23:58:43 GMT+0300 (Москва, стандартное время)
+                at Sun Oct 13 2024 09:53:52 GMT+0300 (Москва, стандартное время)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
