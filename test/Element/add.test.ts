@@ -36,7 +36,6 @@ describe('Check add function', () => {
         const element2 = element1.clone();
         element1.add(element2);
 
-
         const expectedInConnections = [
             {
                 in: (element1.in_connections[0] as lle.Connection).in,
@@ -64,14 +63,46 @@ describe('Check add function', () => {
     });
     test('add element out connections when in<out', () => {
         const expectedOutConnections = [
-            {in: false, out: {name: 'F_0', element: element1, no_source: 0, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_1', element: element1, no_source: 1, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_2', element: element1, no_source: 2, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_3', element: element1, no_source: 3, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_4', element: element1, no_source: 4, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_5', element: element1, no_source: 5, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_6', element: element1, no_source: 6, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_7', element: element1, no_source: 7, is_out: true}, state: 'z'}
+            {
+                in: false,
+                out: {name: 'F_0', element: element1, no_source: 0, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_1', element: element1, no_source: 1, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_2', element: element1, no_source: 2, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_3', element: element1, no_source: 3, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_4', element: element1, no_source: 4, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_5', element: element1, no_source: 5, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_6', element: element1, no_source: 6, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_7', element: element1, no_source: 7, is_out: true},
+                state: 'z'
+            }
         ];
         expect(element1.out_connections).toEqual(expectedOutConnections);
     });
@@ -82,17 +113,17 @@ describe('Check add function', () => {
         const expectedInConnections = [
             {
                 in: (element3.in_connections[0] as lle.Connection).in,
-                out: element2.out_connections[0].out, 
+                out: element2.out_connections[0].out,
                 state: 'z'
             },
             {
                 in: (element3.in_connections[1] as lle.Connection).in,
-                out: element2.out_connections[1].out, 
+                out: element2.out_connections[1].out,
                 state: 'z'
             },
             {
                 in: (element3.in_connections[2] as lle.Connection).in,
-                out: element2.out_connections[2].out, 
+                out: element2.out_connections[2].out,
                 state: 'z'
             },
             'A_4',
@@ -106,9 +137,21 @@ describe('Check add function', () => {
     });
     test('add element out connections when in>out', () => {
         const expectedOutConnections = [
-            {in: false, out: {name: 'F_2', element: element3, no_source: 0, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_1', element: element3, no_source: 1, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_0', element: element3, no_source: 2, is_out: true}, state: 'z'}
+            {
+                in: false,
+                out: {name: 'F_2', element: element3, no_source: 0, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_1', element: element3, no_source: 1, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_0', element: element3, no_source: 2, is_out: true},
+                state: 'z'
+            }
         ];
         expect(element3.out_connections).toEqual(expectedOutConnections);
     });

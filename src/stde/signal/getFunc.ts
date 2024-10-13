@@ -1,5 +1,10 @@
 import * as Types from '../../types';
 
+/**
+ *
+ * @param array
+ * @param elem
+ */
 function getFuncElement(
     array: Types.signal.detailStateArray,
     elem: Types.Interface.Element
@@ -16,6 +21,9 @@ function getFuncElement(
  * Генерирует состояние на выходах элемента.
  * Про состояния подробнее см. {@link Types.signal.detailStateArray}
  * @param array Массив сигналов.
+ * @param inLen
+ * @param outLen
+ * @param inNameArr
  * @returns Обновленный массив состояний.
  */
 function getFunc(
@@ -24,7 +32,7 @@ function getFunc(
     outLen: number,
     inNameArr?: string[]
 ): Types.signal.func {
-    let gState: Types.signal.array[] = new Array(2 ** inLen).fill('z'.repeat(outLen));
+    const gState: Types.signal.array[] = new Array(2 ** inLen).fill('z'.repeat(outLen));
     for (let i = 0; i < array.length; i++) {
         if (
             typeof array[i] === 'object' &&
@@ -45,7 +53,7 @@ function getFunc(
         }
     }
     return (a: Types.signal.array): Types.signal.array => {
-        let int = gState[parseInt(a, 2)];
+        const int = gState[parseInt(a, 2)];
         if (int) {
             return int;
         } else if (gState.length > 0) {
@@ -59,6 +67,8 @@ function getFunc(
 /**
  * Дополнительная функция для getFunc
  * @param state
+ * @param gState
+ * @param outLen
  */
 function genSignal(state: Types.signal.array, gState: Types.signal.array[], outLen: number): void {
     const eqArray: Types.signal.array = 'z'.repeat(outLen);
@@ -73,6 +83,7 @@ function genSignal(state: Types.signal.array, gState: Types.signal.array[], outL
 /**
  * Дополнительная функция для getFunc
  * @param state
+ * @param gState
  */
 function genStateDetailSignal(state: Types.signal.detail, gState: Types.signal.array[]): void {
     if (Array.isArray(state.in)) {
@@ -107,6 +118,9 @@ function getSignalGenerateVariations(s: string): string[] {
 /**
  * Дополнительная функция для getFunc
  * @param state
+ * @param gState
+ * @param inNameArr
+ * @param outLen
  * @param arri
  */
 function genStateSignal(

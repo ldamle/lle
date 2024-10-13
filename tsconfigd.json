@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "types": ["node", "minimatch", "glob"],
+    "declaration": true,
+    "declarationMap": false,
+    "emitDeclarationOnly": true,
     "target": "es6",
     "module": "es6",
     "moduleResolution": "node",
-    "outDir": "./dist",
+    "outDir": "./dist/types",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

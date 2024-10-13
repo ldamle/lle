@@ -1,4 +1,3 @@
-// Массив элементов для передачи их на фронт (для отрисовки)
 type exportElements = {
     name: string;
     id: number;
@@ -11,20 +10,14 @@ type exportElements = {
         id: number[];
     }[];
 }[];
-
-// Граф элементов для передачи на фронт для отрисовки
 type exportElementGraph = {
     id: number;
     out: exportElementGraph;
 }[];
-
-// Граф и массив элементов для передачи на фронт для отрисовки
 type elementGraph = {
     elements: exportElements;
     elementGraph: exportElementGraph;
 };
-
-// Тема siblime text
 type themeSCS = {
     globals: {
         accent: string;
@@ -39,5 +32,4 @@ type themeSCS = {
         [key: string]: string;
     }[];
 };
-
-export {exportElements, exportElementGraph, elementGraph, themeSCS};
+export { exportElements, exportElementGraph, elementGraph, themeSCS };

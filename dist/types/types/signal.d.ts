@@ -6,34 +6,24 @@
  * `z` - сигнал `z` (обрыв)
  */
 type it = 1 | 0 | 'x' | 'z';
-
 /**
  * ! Стандартный способ задания сигналов элементов
  * Здесь задается один набор сигналов элемента
  * * Массив сигналов
  */
 type array = string;
-
 /**
  * Преобразует одиночный сигнал в массив с одним значением
  * @param signal
  */
-function __getArrayIt(signal: it): array {
-    if (signal === 0 || signal === 1) {
-        return signal.toString();
-    }
-    return signal;
-}
-
+declare function __getArrayIt(signal: it): array;
 /**
  * Меняет index в массиве
  * @param signal
  * @param repl
  * @param index
  */
-function __replByIndex(signal: array, repl: it, index: number): array {
-    return signal.substring(0, index) + __getArrayIt(repl) + signal.substring(index + 1);
-}
+declare function __replByIndex(signal: array, repl: it, index: number): array;
 /**
  * ! Упрощенный способ задания сигналов элементов
  * * Массив состояний
@@ -61,8 +51,11 @@ function __replByIndex(signal: array, repl: it, index: number): array {
  * `const nestedStateArray: state = {name: 'control', state: 1, {name: 'enable', state: 0, '1110'}};`
  *
  */
-type state = {name: array; state: it; out?: array | state};
-
+type state = {
+    name: array;
+    state: it;
+    out?: array | state;
+};
 /**
  * * Массив состояний сигналов
  * Используется при описании всех сигналов элемента
@@ -77,7 +70,6 @@ type state = {name: array; state: it; out?: array | state};
  *```
  */
 type stateArray = (array | state)[];
-
 /**
  * ! Детальный способ задания сигналов элементов
  * * Массив сигналов входа и выхода
@@ -89,8 +81,10 @@ type stateArray = (array | state)[];
  * const DetailSignal1: detail = {in: '1000x', out: '100'};
  *```
  */
-type detail = {in: array; out: array};
-
+type detail = {
+    in: array;
+    out: array;
+};
 /**
  * * Массив детальных сигналов
  * Пример:
@@ -104,7 +98,6 @@ type detail = {in: array; out: array};
  * ```
  */
 type detailArray = detail[];
-
 /**
  * * Массив состояний сигналов
  * Используется при описании всех сигналов элемента
@@ -120,7 +113,6 @@ type detailArray = detail[];
  * ```
  */
 type detailStateArray = (detail | state | array)[];
-
 /**
  * * Функция генерации сигналов
  * Для сложных элементов таблицы истинности будут занимать
@@ -134,16 +126,4 @@ type detailStateArray = (detail | state | array)[];
  * ```
  */
 type func = (in_signals: array) => array;
-
-export {
-    it,
-    array,
-    state,
-    stateArray,
-    detail,
-    detailArray,
-    detailStateArray,
-    func,
-    __getArrayIt,
-    __replByIndex
-};
+export { it, array, state, stateArray, detail, detailArray, detailStateArray, func, __getArrayIt, __replByIndex };

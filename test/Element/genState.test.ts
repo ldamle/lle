@@ -24,7 +24,7 @@ describe('Check getState function', () => {
             elem
         );
         const expectedState = ['zzzz', 'zzzz', '0001', 'zzzz', 'zzzz', 'zzzz', '0001', 'zzzz'];
-        const state = [];
+        const state: string[] = [];
         for (let i = 0; i < 8; i++) {
             state.push(elem.state(i.toString(2)));
         }
@@ -48,7 +48,7 @@ describe('Check getState function', () => {
             elem
         );
         const expectedState = ['zzzz', 'zzzz', '1100', 'zzzz', 'zzzz', 'zzzz', 'zzzz', 'zzzz'];
-        const state = [];
+        const state: string[] = [];
         for (let i = 0; i < 8; i++) {
             state.push(elem.state(i.toString(2)));
         }
@@ -68,7 +68,7 @@ describe('Check getState function', () => {
             elem
         );
         const expectedState = ['zz0x', 'zzzz', 'zz0x', 'zzzz', 'zz0x', 'zzzz', 'zz0x', 'zzzz'];
-        const state = [];
+        const state: string[] = [];
         for (let i = 0; i < 8; i++) {
             state.push(elem.state(i.toString(2)));
         }
@@ -87,7 +87,7 @@ describe('Check getState function', () => {
             elem
         );
         const expectedState = ['zzzz', 'zzzz', 'zzzz', 'zzzz', 'zzzz', 'zzzz', '0000', 'zzzz'];
-        const state = [];
+        const state: string[] = [];
         for (let i = 0; i < 8; i++) {
             state.push(elem.state(i.toString(2)));
         }
@@ -101,7 +101,7 @@ describe('Check getState function', () => {
             elem
         );
         const expectedState = ['0000', '0001', '0000', '0010', '0000', '0100', '0000', '1000'];
-        const state = [];
+        const state: string[] = [];
         for (let i = 0; i < 8; i++) {
             state.push(elem.state(i.toString(2)));
         }

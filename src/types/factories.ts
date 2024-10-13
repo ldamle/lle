@@ -1,5 +1,3 @@
-import { ConnectionFactory } from "./factories/connection";
+import {ConnectionFactory} from './factories/connection';
 
-export {
-    ConnectionFactory
-};
+export {ConnectionFactory};

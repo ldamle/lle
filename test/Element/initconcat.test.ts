@@ -53,9 +53,21 @@ describe('Element initialization by two other elements', () => {
 
     test('element3 out_connections should match expected values', () => {
         expect(element3.out_connections).toEqual([
-            {in: false, out: {name: 'F_2', element: element3, no_source: 0, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_1', element: element3, no_source: 1, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'F_0', element: element3, no_source: 2, is_out: true}, state: 'z'}
+            {
+                in: false,
+                out: {name: 'F_2', element: element3, no_source: 0, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_1', element: element3, no_source: 1, is_out: true},
+                state: 'z'
+            },
+            {
+                in: false,
+                out: {name: 'F_0', element: element3, no_source: 2, is_out: true},
+                state: 'z'
+            }
         ]);
     });
 
@@ -74,7 +86,7 @@ describe('Element initialization by two other elements', () => {
     });
 
     test('element4 out_connections should match expected values', () => {
-        console.log(element4.out_connections)
+        console.log(element4.out_connections);
         // expect(element4.out_connections).toEqual([
         //     {in: false, out: {name: 'F_0', element: element4, no_source: 0, is_out: true}, state: 'z'},
         //     {in: false, out: {name: 'F_1', element: element4, no_source: 1, is_out: true}, state: 'z'},

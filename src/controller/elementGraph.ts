@@ -341,7 +341,9 @@ class ElementGraph implements Types.Interface.ElementGraph {
                             conn_name: (thisConns[j] as Types.Interface.Connection).findInString(
                                 nodes[i].element
                             ),
-                            id: elems.indexOf((thisConns[j] as Types.Interface.Connection).out.element)
+                            id: elems.indexOf(
+                                (thisConns[j] as Types.Interface.Connection).out.element
+                            )
                         });
                     }
                 }
