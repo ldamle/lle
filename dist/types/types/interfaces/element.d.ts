@@ -5,6 +5,7 @@ interface Element {
     state?: Types.signal.func;
     frequency?: number;
     name?: string;
+    style: Types.style.element;
     /**
      * Устанавливает параметры элемента: входы, выходы и сигналы.
      */

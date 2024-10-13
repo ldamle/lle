@@ -21,6 +21,10 @@ declare class Element implements Types.Interface.Element {
      */
     state: Types.signal.func;
     /**
+     * Стили элемента для отображения
+     */
+    style: Types.style.element;
+    /**
      * Конструктор класса Element.
      * Создает пустой элемент без входов, выходов, состояний и названия.
      */
@@ -175,6 +179,10 @@ declare class Generator implements Types.Interface.Element {
      * будет происходить переключение сигнала (меандра).
      */
     frequency: number;
+    /**
+     * Стили элемента для отображения
+     */
+    style: Types.style.element;
     /**
      * Конструктор для создания генератора с указанной частотой.
      * @param frequency - Частота переключения сигнала (число).
