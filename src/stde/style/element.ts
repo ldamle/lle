@@ -35,8 +35,10 @@ const Default: Types.style.element = {
 };
 const Generator: Types.style.element = {
     disp: 'ru_el_notation',
-    display_name: false,
-    adder_name_array: [],
+    display_name: true,
+    adder_name_array: [
+        '%<svg width="100" height="40" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg"><path d="M0 50L60 50L60 20" stroke="black" stroke-width="3" fill="none"/><path d="M60 20L140 20" stroke="black" stroke-width="3" fill="none"/><path d="M140 20L140 50L200 50" stroke="black" stroke-width="3" fill="none"/></svg>'
+    ],
     preffix_name_in_connection: '$',
     suffix_name_in_connection: '',
     preffix_name_out_connection: '$',
@@ -48,12 +50,12 @@ const Generator: Types.style.element = {
     rotate: '0',
     sizes: {
         MarginConn: {
-            v: 30,
-            h: 12
+            v: 20,
+            h: 0
         },
         MarginCenter: {
-            v: 15,
-            h: 40,
+            v: 17,
+            h: 10,
             vb: 10
         },
         strokeWidth: 3,
@@ -68,10 +70,10 @@ const Generator: Types.style.element = {
     }
 };
 
-function copy(it:Types.style.element):Types.style.element{
+function copy(it: Types.style.element): Types.style.element {
     return {
         ...it,
-        sizes:{
+        sizes: {
             ...it.sizes,
             MarginConn: {
                 ...it.sizes.MarginConn
@@ -86,6 +88,6 @@ function copy(it:Types.style.element):Types.style.element{
                 ...it.sizes.color
             }
         }
-    }
+    };
 }
 export {Default, Generator, copy};
