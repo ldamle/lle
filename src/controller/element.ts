@@ -414,7 +414,7 @@ class Element implements Types.Interface.Element {
      * Переопределяем стиль одного элемента
      */
     customStyle(): Types.style.element{
-        this.style = structuredClone(stde.style.element.Default)
+        this.style = stde.style.element.copy(stde.style.element.Default)
         return this.style
     }
 }

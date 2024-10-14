@@ -67,4 +67,25 @@ const Generator: Types.style.element = {
         }
     }
 };
-export {Default, Generator};
+
+function copy(it:Types.style.element):Types.style.element{
+    return {
+        ...it,
+        sizes:{
+            ...it.sizes,
+            MarginConn: {
+                ...it.sizes.MarginConn
+            },
+            MarginCenter: {
+                ...it.sizes.MarginCenter
+            },
+            font: {
+                ...it.sizes.font
+            },
+            color: {
+                ...it.sizes.color
+            }
+        }
+    }
+}
+export {Default, Generator, copy};
