@@ -116,7 +116,7 @@ class Element implements Types.Interface.Element {
         this.out_connections = [];
         this.state = () => '';
         this.name = '';
-        this.style = stde.style.element.Default;
+        this.style = this.customStyle();
         if (typeof arg1 === 'string') {
             this.name = arg1;
             if (arg2 instanceof Element && arg3 instanceof Element) {
@@ -408,6 +408,14 @@ class Element implements Types.Interface.Element {
             }
         }
         return true;
+    }
+    
+    /**
+     * Переопределяем стиль одного элемента
+     */
+    customStyle(): Types.style.element{
+        this.style = structuredClone(stde.style.element.Default)
+        return this.style
     }
 }
 
