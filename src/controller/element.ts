@@ -343,8 +343,7 @@ class Element implements Types.Interface.Element {
 
     /**
      * Выдает массив входов в виде строки
-     * @param name Имя входа.
-     * @returns Индекс входа или -1, если не найдено.
+     * @returns Массив входов
      */
     inArray(): string[] {
         const arr: string[] = [];

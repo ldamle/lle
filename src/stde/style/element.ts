@@ -3,9 +3,9 @@ const Default: Types.style.element = {
     disp: 'ru_el_notation',
     display_name: true,
     adder_name_array: [],
-    preffix_name_in_connection: '',
+    preffix_name_in_connection: '$',
     suffix_name_in_connection: '',
-    preffix_name_out_connection: '',
+    preffix_name_out_connection: '$',
     suffix_name_out_connection: '',
     display_in_connections: true,
     display_out_connections: true,
@@ -37,9 +37,9 @@ const Generator: Types.style.element = {
     disp: 'ru_el_notation',
     display_name: false,
     adder_name_array: [],
-    preffix_name_in_connection: '',
+    preffix_name_in_connection: '$',
     suffix_name_in_connection: '',
-    preffix_name_out_connection: '',
+    preffix_name_out_connection: '$',
     suffix_name_out_connection: '',
     display_in_connections: false,
     display_out_connections: true,
@@ -48,18 +48,18 @@ const Generator: Types.style.element = {
     rotate: '0',
     sizes: {
         MarginConn: {
-            v: 10,
-            h: 10
+            v: 30,
+            h: 12
         },
         MarginCenter: {
-            v: 10,
-            h: 10,
+            v: 15,
+            h: 40,
             vb: 10
         },
-        strokeWidth: 10,
+        strokeWidth: 3,
         font: {
-            center: 10,
-            conn: 10
+            center: 35,
+            conn: 28
         },
         color: {
             background: '#ffffff',

@@ -138,8 +138,7 @@ declare class Element implements Types.Interface.Element {
     inIndex(name: string): number;
     /**
      * Выдает массив входов в виде строки
-     * @param name Имя входа.
-     * @returns Индекс входа или -1, если не найдено.
+     * @returns Массив входов
      */
     inArray(): string[];
     /**

@@ -74,10 +74,9 @@ interface Element {
     clone(): Element;
     isAllInConnected(): boolean;
     /**
-     * Выдает массив входов в виде строки
-     * @param name Имя входа.
-     * @returns Индекс входа или -1, если не найдено.
-     */
+    * Выдает массив входов в виде строки
+    * @returns Массив входов
+    */
     inArray?(): string[];
 }
 export { Element };
