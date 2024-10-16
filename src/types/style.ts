@@ -1,4 +1,5 @@
 type element = {
+    class_name: string, 
     disp: 'ru_el_notation'| 'en_el_notation',
     en_el_notation?: string,
     display_name: boolean,

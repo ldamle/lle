@@ -1,5 +1,6 @@
 import * as Types from '../../types';
 const Default: Types.style.element = {
+    class_name: 'Element', 
     disp: 'ru_el_notation',
     display_name: true,
     adder_name_array: [],
@@ -34,6 +35,7 @@ const Default: Types.style.element = {
     }
 };
 const Generator: Types.style.element = {
+    class_name: 'Element', 
     disp: 'ru_el_notation',
     display_name: true,
     adder_name_array: [
