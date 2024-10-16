@@ -25,6 +25,10 @@ declare class Element implements Types.Interface.Element {
      */
     style: Types.style.element;
     /**
+     * Настройки для элемента, используются при моделировании и отображении
+     */
+    props: Types.props;
+    /**
      * Конструктор класса Element.
      * Создает пустой элемент без входов, выходов, состояний и названия.
      */
@@ -186,6 +190,10 @@ declare class Generator implements Types.Interface.Element {
      * Стили элемента для отображения
      */
     style: Types.style.element;
+    /**
+     * Настройки для элемента, используются при моделировании и отображении
+     */
+    props: Types.props;
     /**
      * Конструктор для создания генератора с указанной частотой.
      * @param frequency - Частота переключения сигнала (число).

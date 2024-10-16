@@ -5,4 +5,7 @@ import * as signal from './types/signal';
 import * as style from './types/style';
 import * as Interface from './types/interface';
 import * as Factories from './types/factories';
-export { Factories, Interface, source, elementGraph, server, signal, style };
+type props = {
+    [key: string]: string;
+};
+export { Factories, Interface, source, elementGraph, server, signal, style, props };

@@ -21,6 +21,11 @@ interface Element {
     style: Types.style.element;
 
     /**
+     * Настройки для элемента, используются при моделировании и отображении
+     */
+    props: Types.props;
+
+    /**
      * Устанавливает параметры элемента: входы, выходы и сигналы.
      */
     setParams?(inName: string[], outName: string[], signals: Types.signal.func): Element;

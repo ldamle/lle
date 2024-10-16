@@ -6,13 +6,6 @@ import * as style from './types/style';
 import * as Interface from './types/interface';
 import * as Factories from './types/factories';
 
+type props = {[key: string]: string};
 
-export {
-    Factories,
-    Interface,
-    source,
-    elementGraph,
-    server,
-    signal,
-    style
-};
+export {Factories, Interface, source, elementGraph, server, signal, style, props};

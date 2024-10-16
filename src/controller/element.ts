@@ -33,6 +33,11 @@ class Element implements Types.Interface.Element {
     style: Types.style.element;
 
     /**
+     * Настройки для элемента, используются при моделировании и отображении
+     */
+    props: Types.props;
+
+    /**
      * Конструктор класса Element.
      * Создает пустой элемент без входов, выходов, состояний и названия.
      */
@@ -112,6 +117,7 @@ class Element implements Types.Interface.Element {
         arg3?: Types.signal.detailStateArray | Element | string[] | Types.signal.func,
         signals?: Types.signal.detailStateArray | Types.signal.func
     ) {
+        this.props = {}
         this.in_connections = [];
         this.out_connections = [];
         this.state = () => '';
@@ -425,6 +431,7 @@ class Element implements Types.Interface.Element {
  * через которое передаётся сигнал.
  */
 class Generator implements Types.Interface.Element {
+
     /**
      * Массив выходных соединений элемента.
      * В данном случае у генератора есть только одно выходное соединение.
@@ -441,6 +448,11 @@ class Generator implements Types.Interface.Element {
      * Стили элемента для отображения
      */
     style: Types.style.element;
+
+    /**
+     * Настройки для элемента, используются при моделировании и отображении
+     */
+    props: Types.props;
 
     /**
      * Конструктор для создания генератора с указанной частотой.
@@ -464,6 +476,7 @@ class Generator implements Types.Interface.Element {
      * @param frequency - Частота переключения сигнала, если передано имя.
      */
     constructor(arg1: number | string, frequency?: number) {
+        this.props = {}
         this.style = stde.style.element.Generator;
         if (typeof arg1 === 'string' && frequency) {
             this.frequency = frequency;
