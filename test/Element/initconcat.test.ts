@@ -56,17 +56,20 @@ describe('Element initialization by two other elements', () => {
             {
                 in: false,
                 out: {name: 'F_2', element: element3, no_source: 0, is_out: true},
-                state: 'z'
+                state: 'z',
+                style: lle.stde.style.connection.Default
             },
             {
                 in: false,
                 out: {name: 'F_1', element: element3, no_source: 1, is_out: true},
-                state: 'z'
+                state: 'z',
+                style: lle.stde.style.connection.Default
             },
             {
                 in: false,
                 out: {name: 'F_0', element: element3, no_source: 2, is_out: true},
-                state: 'z'
+                state: 'z',
+                style: lle.stde.style.connection.Default
             }
         ]);
     });

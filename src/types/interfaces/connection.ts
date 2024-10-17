@@ -10,6 +10,9 @@ interface Connection {
     // Текущий сигнал соединения
     state: Types.signal.it;
 
+    // Стили текущего соединения
+    style: Types.style.connection;
+
     /**
      * Подключает соединение ко входу
      * @param inSource Вход соединения

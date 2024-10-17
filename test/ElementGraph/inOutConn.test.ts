@@ -27,10 +27,30 @@ describe('Check getInputs/getOutputs functions', () => {
     });
     test('check getOutputs', () => {
         expect(eg.getOutputs()).toEqual([
-            {in: false, out: {name: 'A', element: e1, no_source: 0, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'A', element: e4, no_source: 0, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'B', element: e4, no_source: 1, is_out: true}, state: 'z'},
-            {in: false, out: {name: 'C', element: e4, no_source: 2, is_out: true}, state: 'z'}
+            {
+                in: false,
+                out: {name: 'A', element: e1, no_source: 0, is_out: true},
+                state: 'z',
+                style: lle.stde.style.connection.Default
+            },
+            {
+                in: false,
+                out: {name: 'A', element: e4, no_source: 0, is_out: true},
+                state: 'z',
+                style: lle.stde.style.connection.Default
+            },
+            {
+                in: false,
+                out: {name: 'B', element: e4, no_source: 1, is_out: true},
+                state: 'z',
+                style: lle.stde.style.connection.Default
+            },
+            {
+                in: false,
+                out: {name: 'C', element: e4, no_source: 2, is_out: true},
+                state: 'z',
+                style: lle.stde.style.connection.Default
+            }
         ]);
     });
 });

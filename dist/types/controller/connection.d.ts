@@ -17,6 +17,7 @@ declare class Connection implements Types.Interface.Connection {
      * * Текущий сигнал соединения
      */
     state: Types.signal.it;
+    style: Types.style.connection;
     /**
      * Создает новое соединение с подключением только выхода,
      * оставляя вход свободным.

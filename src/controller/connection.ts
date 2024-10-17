@@ -1,4 +1,5 @@
 import * as Types from '../types';
+import * as stde from '../stde/stde';
 
 /**
  * Класс `Connection` позволяет соединять входы и выходы различных элементов.
@@ -26,6 +27,9 @@ class Connection implements Types.Interface.Connection {
      */
     state: Types.signal.it;
     //--------------------------------- Connection:state --------------------------------//
+
+    // Стили текущего соединения
+    style: Types.style.connection;
 
     /**
      * Создает новое соединение с подключением только выхода,
@@ -89,6 +93,7 @@ class Connection implements Types.Interface.Connection {
         this.in = false;
         this.out = outSource;
         this.state = 'z';
+        this.style = stde.style.connection.copy(stde.style.connection.Default)
         if (arg2) {
             this.state = 'x';
             if (state) {

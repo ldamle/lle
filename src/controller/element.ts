@@ -122,7 +122,7 @@ class Element implements Types.Interface.Element {
         this.out_connections = [];
         this.state = () => '';
         this.name = '';
-        this.style = this.customStyle();
+        this.style = stde.style.element.copy(stde.style.element.Default)
         if (typeof arg1 === 'string') {
             this.name = arg1;
             if (arg2 instanceof Element && arg3 instanceof Element) {
@@ -414,14 +414,6 @@ class Element implements Types.Interface.Element {
         }
         return true;
     }
-    
-    /**
-     * Переопределяем стиль одного элемента
-     */
-    customStyle(): Types.style.element{
-        this.style = stde.style.element.copy(stde.style.element.Default)
-        return this.style
-    }
 }
 
 /**
@@ -477,7 +469,7 @@ class Generator implements Types.Interface.Element {
      */
     constructor(arg1: number | string, frequency?: number) {
         this.props = {}
-        this.style = stde.style.element.Generator;
+        this.style = stde.style.element.copy(stde.style.element.Generator);
         if (typeof arg1 === 'string' && frequency) {
             this.frequency = frequency;
             this.out_connections = [

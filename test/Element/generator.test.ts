@@ -4,7 +4,12 @@ describe('Check generator element', () => {
 
     test('check constructor', () => {
         expect(gen1.out_connections).toEqual([
-            {in: false, out: {name: 'g_1', element: gen1, no_source: 0, is_out: true}, state: 'z'}
+            {
+                in: false,
+                out: {name: 'g_1', element: gen1, no_source: 0, is_out: true},
+                state: 'z',
+                style: lle.stde.style.connection.Default
+            }
         ]);
     });
 
@@ -17,7 +22,8 @@ describe('Check generator element', () => {
                 no_source: 0,
                 is_out: true
             },
-            state: 'z'
+            state: 'z',
+            style: lle.stde.style.connection.Default
         });
     });
 
@@ -30,7 +36,8 @@ describe('Check generator element', () => {
                 no_source: 0,
                 is_out: true
             },
-            state: 'z'
+            state: 'z',
+            style: lle.stde.style.connection.Default
         });
     });
 
@@ -43,7 +50,8 @@ describe('Check generator element', () => {
                 no_source: 0,
                 is_out: true
             },
-            state: 'z'
+            state: 'z',
+            style: lle.stde.style.connection.Default
         });
     });
 

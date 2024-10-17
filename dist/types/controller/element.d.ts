@@ -164,10 +164,6 @@ declare class Element implements Types.Interface.Element {
      * @returns true, если все входы подключены, иначе false.
      */
     isAllInConnected(): boolean;
-    /**
-     * Переопределяем стиль одного элемента
-     */
-    customStyle(): Types.style.element;
 }
 /**
  * Класс Generator представляет активный элемент цепи,

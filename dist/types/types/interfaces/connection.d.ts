@@ -3,6 +3,7 @@ interface Connection {
     in: Types.source.array | false;
     readonly out: Types.source.it;
     state: Types.signal.it;
+    style: Types.style.connection;
     /**
      * Подключает соединение ко входу
      * @param inSource Вход соединения
