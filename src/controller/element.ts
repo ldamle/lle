@@ -299,6 +299,7 @@ class Element implements Types.Interface.Element {
         if (connection) {
             let iOut = -1;
             for (let i = 0; i < this.in_connections.length; i++) {
+                console.log(this.in_connections, name)
                 if (this.in_connections[i] === name) {
                     this.in_connections[i] = connection;
                     iOut = i;
