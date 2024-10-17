@@ -12,9 +12,8 @@ const Default: Types.style.element = {
     display_out_connections: true,
     display_line_in_connections: true,
     display_line_out_connections: true,
-    xcIndent: 10,
-    minIndent: 20,
     rotate: '0',
+    useTheme: true,
     sizes: {
         MarginConn: {
             v: 30,
@@ -52,8 +51,7 @@ const Generator: Types.style.element = {
     display_line_in_connections: false,
     display_line_out_connections: false,
     rotate: '0',
-    xcIndent: 10,
-    minIndent: 20,
+    useTheme: true,
     sizes: {
         MarginConn: {
             v: 20,

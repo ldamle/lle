@@ -13,8 +13,7 @@ type element = {
     display_line_in_connections: boolean;
     display_line_out_connections: boolean;
     rotate: '0' | '90' | '180' | '270';
-    xcIndent: number;
-    minIndent: number;
+    useTheme: boolean;
     sizes: {
         MarginConn: {
             v: number;
@@ -43,6 +42,9 @@ type connection = {
     label_in: string;
     stroke: number;
     color: string;
+    useTheme: boolean;
+    xcIndent: number;
+    minIndent: number;
 };
 
 export {element, connection};
