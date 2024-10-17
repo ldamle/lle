@@ -13,6 +13,8 @@ type element = {
     display_line_in_connections: boolean;
     display_line_out_connections: boolean;
     rotate: '0' | '90' | '180' | '270';
+    xcIndent: number;
+    minIndent: number;
     sizes: {
         MarginConn: {
             v: number;
@@ -34,4 +36,11 @@ type element = {
         };
     };
 };
-export { element };
+type connection = {
+    class_name: string;
+    label_out: string;
+    label_in: string;
+    stroke: number;
+    color: string;
+};
+export { element, connection };
